@@ -10,6 +10,7 @@ use app\models\ContactForm;
 
 class HomeController extends Controller {
 	public function behaviors() {
+		return [ ];
 		return [ 
 				'access' => [ 
 						'class' => AccessControl::className (),
