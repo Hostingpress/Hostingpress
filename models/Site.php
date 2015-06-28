@@ -5,9 +5,10 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "sites".
+ * This is the model class for table "site".
  *
  * @property string $id
+ * @property integer $user_id
  * @property string $domain
  * @property string $DB_NAME
  * @property string $DB_USER
@@ -25,15 +26,17 @@ use Yii;
  * @property string $NONCE_SALT
  * @property string $DB_PREFIX
  * @property string $WP_DEBUG
+ *
+ * @property Security[] $securities
  */
-class Sites extends \yii\db\ActiveRecord
+class Site extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'sites';
+        return 'site';
     }
 
     /**
@@ -42,6 +45,7 @@ class Sites extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['user_id'], 'integer'],
             [['domain', 'DB_NAME', 'DB_USER', 'DB_PASSWORD', 'DB_HOST', 'DB_CHARSET', 'DB_COLLATE', 'AUTH_KEY', 'SECURE_AUTH_KEY', 'LOGGED_IN_KEY', 'NONCE_KEY', 'AUTH_SALT', 'SECURE_AUTH_SALT', 'LOGGED_IN_SALT', 'NONCE_SALT', 'DB_PREFIX', 'WP_DEBUG'], 'string', 'max' => 255]
         ];
     }
@@ -53,6 +57,7 @@ class Sites extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'user_id' => 'User ID',
             'domain' => 'Domain',
             'DB_NAME' => 'Db  Name',
             'DB_USER' => 'Db  User',
@@ -71,5 +76,13 @@ class Sites extends \yii\db\ActiveRecord
             'DB_PREFIX' => 'Db  Prefix',
             'WP_DEBUG' => 'Wp  Debug',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSecurities()
+    {
+        return $this->hasMany(Security::className(), ['domain_id' => 'id']);
     }
 }

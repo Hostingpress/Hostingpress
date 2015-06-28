@@ -4,15 +4,21 @@ namespace app\components;
 
 use Yii;
 use yii\base\Component;
-use app\models\Sites;
+use app\models\Site;
 
 class Wordpress extends Component {
 	public function init() {
 	}
 	public function check() {
-		return Sites::find ()->where ( [ 
+		if ($site = Site::find ()->where ( [ 
 				'domain' => Yii::$app->getRequest ()->serverName 
-		] )->one ();
+		] )->one ()) {
+			$this->_checkAccess ( $site );
+			return $site;
+		}
+		return false;
+	}
+	protected function _checkAccess(Site $site) {
 	}
 	public function generatePassword($passwordLength = 64, $specialChars = true, $extraSpecialChars = true) {
 		$chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';

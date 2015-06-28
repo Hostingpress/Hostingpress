@@ -25,6 +25,20 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
     <div class="wrap">
         <?php
+		$items = [
+				['label' => 'Home', 'url' => ['/home/index']],
+				['label' => 'About', 'url' => ['/home/about']],
+				['label' => 'Contact', 'url' => ['/home/contact']],
+		];
+		if(Yii::$app->user->isGuest):
+		$items[] = ['label' => 'Login', 'url' => ['/user/security/login']];
+		else:
+		$items[] = ['label' => 'Dashboard', 'url' => ['/dashboard/index']];
+		$items[] = ['label' => 'Profile', 'url' => ['/user/settings/profile']];
+		$items[] = ['label' => 'Logout (' . Yii::$app->user->identity->username . ')',
+							'url' => ['/user/security/logout'],
+							'linkOptions' => ['data-method' => 'post']];
+		endif;
             NavBar::begin([
                 'brandLabel' => 'We Make WP',
                 'brandUrl' => Yii::$app->homeUrl,
@@ -34,19 +48,7 @@ AppAsset::register($this);
             ]);
             echo Nav::widget([
                 'options' => ['class' => 'navbar-nav navbar-right'],
-                'items' => [
-                    ['label' => 'Home', 'url' => ['/home/index']],
-                    ['label' => 'About', 'url' => ['/home/about']],
-                    ['label' => 'Contact', 'url' => ['/home/contact']],
-                    /* Yii::$app->user->isGuest ? :
-                        ['label' => 'Profile',
-                            'url' => ['/user/settings/profile']], */
-					Yii::$app->user->isGuest ?
-					['label' => 'Login', 'url' => ['/user/security/login']] :
-					['label' => 'Logout (' . Yii::$app->user->identity->username . ')',
-							'url' => ['/user/security/logout'],
-							'linkOptions' => ['data-method' => 'post']],
-				],
+                'items' => $items,
             ]);
             NavBar::end();
         ?>

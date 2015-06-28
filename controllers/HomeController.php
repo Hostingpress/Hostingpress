@@ -6,7 +6,7 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
-use app\models\ContactForm;
+use app\models\forms\ContactForm;
 
 class HomeController extends Controller {
 	public function behaviors() {
