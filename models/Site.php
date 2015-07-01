@@ -26,63 +26,108 @@ use Yii;
  * @property string $NONCE_SALT
  * @property string $DB_PREFIX
  * @property string $WP_DEBUG
+ * @property integer $status
  *
  * @property Security[] $securities
  */
-class Site extends \yii\db\ActiveRecord
-{
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
-    {
-        return 'site';
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            [['user_id'], 'integer'],
-            [['domain', 'DB_NAME', 'DB_USER', 'DB_PASSWORD', 'DB_HOST', 'DB_CHARSET', 'DB_COLLATE', 'AUTH_KEY', 'SECURE_AUTH_KEY', 'LOGGED_IN_KEY', 'NONCE_KEY', 'AUTH_SALT', 'SECURE_AUTH_SALT', 'LOGGED_IN_SALT', 'NONCE_SALT', 'DB_PREFIX', 'WP_DEBUG'], 'string', 'max' => 255]
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'user_id' => 'User ID',
-            'domain' => 'Domain',
-            'DB_NAME' => 'Db  Name',
-            'DB_USER' => 'Db  User',
-            'DB_PASSWORD' => 'Db  Password',
-            'DB_HOST' => 'Db  Host',
-            'DB_CHARSET' => 'Db  Charset',
-            'DB_COLLATE' => 'Db  Collate',
-            'AUTH_KEY' => 'Auth  Key',
-            'SECURE_AUTH_KEY' => 'Secure  Auth  Key',
-            'LOGGED_IN_KEY' => 'Logged  In  Key',
-            'NONCE_KEY' => 'Nonce  Key',
-            'AUTH_SALT' => 'Auth  Salt',
-            'SECURE_AUTH_SALT' => 'Secure  Auth  Salt',
-            'LOGGED_IN_SALT' => 'Logged  In  Salt',
-            'NONCE_SALT' => 'Nonce  Salt',
-            'DB_PREFIX' => 'Db  Prefix',
-            'WP_DEBUG' => 'Wp  Debug',
-        ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getSecurities()
-    {
-        return $this->hasMany(Security::className(), ['domain_id' => 'id']);
-    }
+class Site extends \yii\db\ActiveRecord {
+	/**
+	 * @inheritdoc
+	 */
+	public static function tableName() {
+		return 'site';
+	}
+	
+	/**
+	 * @inheritdoc
+	 */
+	public function rules() {
+		return [ 
+				[ 
+						[ 
+								'domain',
+								'user_id',
+								'DB_NAME',
+								'DB_USER',
+								'DB_PASSWORD',
+								'DB_HOST',
+								'DB_CHARSET',
+								'AUTH_KEY',
+								'SECURE_AUTH_KEY',
+								'LOGGED_IN_KEY',
+								'NONCE_KEY',
+								'AUTH_SALT',
+								'SECURE_AUTH_SALT',
+								'LOGGED_IN_SALT',
+								'NONCE_SALT' 
+						],
+						'required' 
+				],
+				[ 
+						[ 
+								'user_id' 
+						],
+						'integer' 
+				],
+				[ 
+						[ 
+								'domain',
+								'DB_NAME',
+								'DB_USER',
+								'DB_PASSWORD',
+								'DB_HOST',
+								'DB_CHARSET',
+								'AUTH_KEY',
+								'SECURE_AUTH_KEY',
+								'LOGGED_IN_KEY',
+								'NONCE_KEY',
+								'AUTH_SALT',
+								'SECURE_AUTH_SALT',
+								'LOGGED_IN_SALT',
+								'NONCE_SALT',
+								'DB_PREFIX' 
+						],
+						'string',
+						'max' => 255 
+				] 
+		];
+	}
+	
+	/**
+	 * @inheritdoc
+	 */
+	public function attributeLabels() {
+		return [ 
+				'id' => 'ID',
+				'user_id' => 'User ID',
+				'domain' => 'Domain',
+				'DB_NAME' => 'Db  Name',
+				'DB_USER' => 'Db  User',
+				'DB_PASSWORD' => 'Db  Password',
+				'DB_HOST' => 'Db  Host',
+				'DB_CHARSET' => 'Db  Charset',
+				'DB_COLLATE' => 'Db  Collate',
+				'AUTH_KEY' => 'Auth  Key',
+				'SECURE_AUTH_KEY' => 'Secure  Auth  Key',
+				'LOGGED_IN_KEY' => 'Logged  In  Key',
+				'NONCE_KEY' => 'Nonce  Key',
+				'AUTH_SALT' => 'Auth  Salt',
+				'SECURE_AUTH_SALT' => 'Secure  Auth  Salt',
+				'LOGGED_IN_SALT' => 'Logged  In  Salt',
+				'NONCE_SALT' => 'Nonce  Salt',
+				'DB_PREFIX' => 'Db  Prefix',
+				'WP_DEBUG' => 'Wp  Debug',
+				'status' => 'Status' 
+		];
+	}
+	
+	/**
+	 *
+	 * @return \yii\db\ActiveQuery
+	 */
+	public function getSecurities() {
+		return $this->hasMany ( Security::className (), [ 
+				'domain_id' => 'id' 
+		] );
+	}
 }

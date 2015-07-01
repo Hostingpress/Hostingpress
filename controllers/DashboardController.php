@@ -4,10 +4,13 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Site;
+use app\models\forms\SiteForm;
 use app\models\search\SiteSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\Url;
+use yii\widgets\ActiveForm;
 
 /**
  * DashboardController implements the CRUD actions for Site model.
@@ -19,6 +22,12 @@ class DashboardController extends Controller {
 						'class' => VerbFilter::className (),
 						'actions' => [ 
 								'delete' => [ 
+										'post' 
+								],
+								'status' => [ 
+										'post' 
+								],
+								'check' => [ 
 										'post' 
 								] 
 						] 
@@ -47,8 +56,8 @@ class DashboardController extends Controller {
 	 * @param string $site        	
 	 * @return mixed
 	 */
-	public function actionView($site) {
-		return $this->render ( 'view', [ 
+	public function actionManage($site) {
+		return $this->render ( 'manage', [ 
 				'model' => $this->findModel ( $site ) 
 		] );
 	}
@@ -60,13 +69,15 @@ class DashboardController extends Controller {
 	 * @return mixed
 	 */
 	public function actionCreate() {
-		$model = new Site ();
+		$model = new SiteForm ();
 		
-		if ($model->load ( Yii::$app->request->post () ) && $model->save ()) {
-			return $this->redirect ( [ 
-					'view',
-					'site' => $model->domain 
-			] );
+		if (Yii::$app->request->isAjax && $model->load ( Yii::$app->request->post () )) {
+			Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+			return ActiveForm::validate ( $model );
+		}
+		
+		if ($model->load ( Yii::$app->request->post () ) && $model->create ()) {
+			return $this->redirect ( Url::to ( '/dashboard/index' ) );
 		} else {
 			return $this->render ( 'create', [ 
 					'model' => $model 
@@ -109,6 +120,35 @@ class DashboardController extends Controller {
 		return $this->redirect ( [ 
 				'index' 
 		] );
+	}
+	
+	/**
+	 * Change status an existing Site model.
+	 *
+	 * @param string $site        	
+	 * @return mixed
+	 */
+	public function actionStatus($site) {
+		$model = $this->findModel ( $site );
+		$model->status = $model->status == 1 ? 0 : 1;
+		$model->save ();
+		return $this->redirect ( [ 
+				'index' 
+		] );
+	}
+	
+	/**
+	 * Check status an existing Site model.
+	 *
+	 * @param string $site        	
+	 * @return mixed
+	 */
+	public function actionCheck($site) {
+		$model = $this->findModel ( $site );
+		\Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+		return [ 
+				'status' => $model->status 
+		];
 	}
 	
 	/**

@@ -11,7 +11,8 @@
         "yiisoft/yii2-bootstrap": "*",
         "yiisoft/yii2-swiftmailer": "*",
         "yiisoft/yii2-authclient": "*",
-        "dektrium/yii2-user": "*"
+        "dektrium/yii2-user": "*",
+        "bower-asset/bootbox": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

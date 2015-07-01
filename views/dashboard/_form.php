@@ -1,18 +1,29 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Site */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="site-form">
-  <?php $form = ActiveForm::begin(); ?>
-  <?= $form->field($model, 'domain')->textInput(['maxlength' => true]) ?>
-  <div class="form-group">
-    <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <?php $form = ActiveForm::begin([
+			'layout' => 'horizontal',
+			'enableAjaxValidation' => true
+		]); ?>
+      <?= $form->field($model, 'domain')->textInput(['maxlength' => true]) ?>
+      <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+      <?= $form->field($model, 'admin')->textInput(['maxlength' => true]) ?>
+      <?= $form->field($model, 'password')->passwordInput([]) ?>
+      <?= $form->field($model, 'email')->textInput([]) ?>
+      <div class="form-group">
+        <?= Html::submitButton('Create', ['class' => 'btn btn-success']) ?>
+      </div>
+      <?php ActiveForm::end(); ?>
+    </div>
   </div>
-  <?php ActiveForm::end(); ?>
 </div>

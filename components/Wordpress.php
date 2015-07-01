@@ -5,14 +5,20 @@ namespace app\components;
 use Yii;
 use yii\base\Component;
 use app\models\Site;
+use app\components\Wordpress\WordpressCommon;
+use app\components\Wordpress\WordpressFront;
+use app\components\Wordpress\WordpressAdmin;
 
 class Wordpress extends Component {
 	public function init() {
 	}
-	public function check() {
-		if ($site = Site::find ()->where ( [ 
+	public function check($cli = false) {
+		$args = [ 
 				'domain' => Yii::$app->getRequest ()->serverName 
-		] )->one ()) {
+		];
+		if (! $cli)
+			$args ['status'] = 'active';
+		if ($site = Site::find ()->where ( $args )->one ()) {
 			$this->_checkAccess ( $site );
 			return $site;
 		}
