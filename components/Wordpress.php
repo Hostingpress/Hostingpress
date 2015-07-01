@@ -12,11 +12,11 @@ use app\components\Wordpress\WordpressAdmin;
 class Wordpress extends Component {
 	public function init() {
 	}
-	public function check($cli = false) {
+	public function check($active = true) {
 		$args = [ 
 				'domain' => Yii::$app->getRequest ()->serverName 
 		];
-		if (! $cli)
+		if ($active)
 			$args ['status'] = 'active';
 		if ($site = Site::find ()->where ( $args )->one ()) {
 			$this->_checkAccess ( $site );

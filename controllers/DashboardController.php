@@ -77,7 +77,9 @@ class DashboardController extends Controller {
 		}
 		
 		if ($model->load ( Yii::$app->request->post () ) && $model->create ()) {
-			return $this->redirect ( Url::to ( '/dashboard/index' ) );
+			return $this->redirect ( [ 
+					'dashboard/index' 
+			] );
 		} else {
 			return $this->render ( 'create', [ 
 					'model' => $model 
