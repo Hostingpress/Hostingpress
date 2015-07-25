@@ -27,11 +27,12 @@ AppAsset::register($this);
         <?php
 		$items = [
 				['label' => 'Home', 'url' => ['/home/index']],
-				['label' => 'About', 'url' => ['/home/about']],
-				['label' => 'Contact', 'url' => ['/home/contact']],
+				// ['label' => 'About', 'url' => ['/home/about']],
+				// ['label' => 'Contact', 'url' => ['/home/contact']],
 		];
 		if(Yii::$app->user->isGuest):
 		$items[] = ['label' => 'Login', 'url' => ['/user/security/login']];
+		$items[] = ['label' => 'Register', 'url' => ['/user/registration/register']];
 		else:
 		$items[] = ['label' => 'Dashboard', 'url' => ['/dashboard/index']];
 		$items[] = ['label' => 'Profile', 'url' => ['/user/settings/profile']];

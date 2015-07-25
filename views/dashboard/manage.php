@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use \yii\bootstrap\Modal;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Site */
@@ -33,10 +34,16 @@ app\assets\BootboxAsset::overrideSystemConfirm();
   <div class="row">
     <div class="col-md-6">
       <div class="page-header">
-        <h4> Authorized Access </h4>
+        <h4> Authorized Access <?= yii\helpers\Html::a('Create User', ['#'], ['class' => 'btn btn-success btn-xs pull-right']) ?> </h4>
       </div>
+      <?= $this->render('security/index', [
+	  	'model' => $model,
+        'securityDataProvider' => $securityDataProvider,
+		'securitySearchModel' => $securitySearchModel,
+    ]) ?>
     </div>
   </div>
+  <hr>
   <div class="row">
     <div class="col-md-12">
       <?= yii\bootstrap\Collapse::widget([

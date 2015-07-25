@@ -15,8 +15,8 @@ app\assets\BootboxAsset::overrideSystemConfirm();
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-12">
-      <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-        <?= Html::a('Create New', ['create'], ['class' => 'btn btn-success btn-sm pull-right']) ?>
+      <?= Html::a('Create New', ['create'], ['class' => 'btn btn-success btn-sm pull-right']) ?>
+      <?php if($dataProvider->count):?>
       <?php \yii\widgets\Pjax::begin(); ?>
       <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -38,6 +38,7 @@ app\assets\BootboxAsset::overrideSystemConfirm();
 					if($model->status != 'active') return $model->domain;
 					return Html::a($model->domain, 'http://' . $model->domain);
 				},
+				'filterInputOptions' => ['class'=>'form-control input-sm'],
 			],
             [
 				'class' => 'yii\grid\ActionColumn',
@@ -103,6 +104,9 @@ app\assets\BootboxAsset::overrideSystemConfirm();
         ],
     ]); ?>
       <?php \yii\widgets\Pjax::end(); ?>
+      <?php else:?>
+      <div class="alert-info alert fade in"> You dont have sites. </div>
+      <?php endif;?>
     </div>
   </div>
 </div>

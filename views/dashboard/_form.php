@@ -15,10 +15,10 @@ use yii\bootstrap\ActiveForm;
 			'layout' => 'horizontal',
 			'enableAjaxValidation' => true
 		]); ?>
-      <?= $form->field($model, 'domain')->textInput(['maxlength' => true]) ?>
+      <?= $form->field($model, 'domain')->textInput(['maxlength' => true, 'placeholder' => 'site.wemakewp.com']) ?>
       <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
       <?= $form->field($model, 'admin')->textInput(['maxlength' => true]) ?>
-      <?= $form->field($model, 'password')->passwordInput([]) ?>
+      <?= $form->field($model, 'password')->passwordInput() ?>
       <?= $form->field($model, 'email')->textInput([]) ?>
       <div class="form-group">
         <?= Html::submitButton('Create', ['class' => 'btn btn-success']) ?>

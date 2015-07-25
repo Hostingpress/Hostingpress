@@ -12,6 +12,11 @@ use app\components\Wordpress\WordpressAdmin;
 class Wordpress extends Component {
 	public function init() {
 	}
+	/**
+	 *
+	 * @param boolean $active        	
+	 * @return Ambigous <\yii\db\ActiveRecord, multitype:, NULL>|boolean
+	 */
 	public function check($active = true) {
 		$args = [ 
 				'domain' => Yii::$app->getRequest ()->serverName 

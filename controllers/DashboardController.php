@@ -8,9 +8,12 @@ use app\models\forms\SiteForm;
 use app\models\search\SiteSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
+use app\models\Security;
+use app\models\search\SecuritySearch;
 
 /**
  * DashboardController implements the CRUD actions for Site model.
@@ -18,6 +21,33 @@ use yii\widgets\ActiveForm;
 class DashboardController extends Controller {
 	public function behaviors() {
 		return [ 
+				'access' => [ 
+						'class' => AccessControl::className (),
+						'only' => [ 
+								'index',
+								'manage',
+								'update',
+								'delete',
+								'status',
+								'check' 
+						],
+						'rules' => [ 
+								[ 
+										'actions' => [ 
+												'index',
+												'manage',
+												'update',
+												'delete',
+												'status',
+												'check' 
+										],
+										'allow' => true,
+										'roles' => [ 
+												'@' 
+										] 
+								] 
+						] 
+				],
 				'verbs' => [ 
 						'class' => VerbFilter::className (),
 						'actions' => [ 
@@ -57,8 +87,13 @@ class DashboardController extends Controller {
 	 * @return mixed
 	 */
 	public function actionManage($site) {
+		$securitySearchModel = new SecuritySearch ();
+		$securityDataProvider = $securitySearchModel->search ( Yii::$app->request->queryParams );
+		
 		return $this->render ( 'manage', [ 
-				'model' => $this->findModel ( $site ) 
+				'model' => $this->findModel ( $site ),
+				'securitySearchModel' => $securitySearchModel,
+				'securityDataProvider' => $securityDataProvider 
 		] );
 	}
 	
